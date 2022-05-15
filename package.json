@@ -1,0 +1,29 @@
+{
+  "name": "social-network-api-v2.0",
+  "version": "1.0.0",
+  "description": "#### This is a backend API (only) for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. It uses the Express.js framework for API/routing, MongoDB/NoSQL for db storage and Mongoose as the Object Document Model (ODM) to interface between Express and MongoDB.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrahma04/social-network-api-v2.0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrahma04/social-network-api-v2.0/issues"
+  },
+  "homepage": "https://github.com/mrahma04/social-network-api-v2.0#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
