@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Thought } = require('../models')
 
 // controllers are all the functions for CRUD operations on the models
 const userController = {
@@ -38,6 +38,7 @@ const userController = {
     },
     async createUser({ body }, res) {
         try {
+            // validators are only run while creating or updating the document
             const dbUserData = await User.create(body)
             res.json(dbUserData)
         }
@@ -51,7 +52,8 @@ const userController = {
             const dbUserData = await User.findOneAndUpdate(
                 { _id: params.userId },
                 body,
-                { new: true }
+                { new: true },
+                // validators are only run while creating or updating the document
             )
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' })
@@ -66,9 +68,30 @@ const userController = {
     },
     async deleteUser({ params }, res) {
         try {
-            const dbUserData = await User.findOneAndDelete({
-                _id: params.userId,
+            const dbUserData = await User.findOne(
+                {
+                    _id: params.userId,
+                }
+            )
+            // console.log(dbUserData)
+
+            console.log(dbUserData.thoughts, dbUserData.username)
+            dbUserData.thoughts.forEach(thought => {
+                Thought.findOneAndDelete({ _id: thought })
+                    .then(() => {
+                        User.findOneAndDelete({ _id: params.userId }).then(() => {
+                            console.log('USER DELETED: ', params.userId)
+                        })
+                        console.log('THOUGHTS DELETED: ', thought)
+                    })
             })
+
+            // dbUserData.map(user => {
+            //     Thought.deleteOne({
+            //         _id: user._id
+            //     })
+            // })
+
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' })
                 return
