@@ -24,6 +24,9 @@ const userController = {
         try {
             const dbUserData = await User.findOne({
                 _id: params.userId
+            }).populate({
+                path: 'thoughts',
+                select: '-__v'
             })
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' })
@@ -73,24 +76,23 @@ const userController = {
                     _id: params.userId,
                 }
             )
-            // console.log(dbUserData)
-
             console.log(dbUserData.thoughts, dbUserData.username)
-            dbUserData.thoughts.forEach(thought => {
-                Thought.findOneAndDelete({ _id: thought })
-                    .then(() => {
-                        User.findOneAndDelete({ _id: params.userId }).then(() => {
-                            console.log('USER DELETED: ', params.userId)
+            if (!dbUserData.thoughts.length) {
+                User.findOneAndDelete({ _id: params.userId }).then(() => {
+                    console.log('USER DELETED: ', params.userId)
+                }
+                )
+            } else {
+                dbUserData.thoughts.forEach(thought => {
+                    Thought.findOneAndDelete({ _id: thought })
+                        .then(() => {
+                            User.findOneAndDelete({ _id: params.userId }).then(() => {
+                                console.log('USER DELETED: ', params.userId)
+                            })
+                            console.log('THOUGHTS DELETED: ', thought)
                         })
-                        console.log('THOUGHTS DELETED: ', thought)
-                    })
-            })
-
-            // dbUserData.map(user => {
-            //     Thought.deleteOne({
-            //         _id: user._id
-            //     })
-            // })
+                })
+            }
 
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' })
