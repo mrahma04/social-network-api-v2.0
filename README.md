@@ -2,11 +2,11 @@
 
 #### This is a backend API (only) for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. It uses the Express.js framework for API/routing, MongoDB/NoSQL for db storage and Mongoose as the Object Document Model (ODM) to interface between Express and MongoDB.
 
+***:rotating_light: BONUS ALERT - NOW YOU CAN DELETE ALL YOUR THOUGHTS WHEN A USER IS DELETED :rotating_light:***
+
 ### To use this Application
 
-- [Go to live link](https://whispering-depths-44425.herokuapp.com/)
-- Sign up using email address, username and password
-- Log in using your username and password
+- [Walkthrough Video](https://drive.google.com/file/d/1xJx7uJ8zQvZj9BR7tMjd1mxPWkYhp5bW/view)
 
 ### User Story
 
